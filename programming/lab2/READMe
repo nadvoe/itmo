@@ -1,5 +1,3 @@
-джарник прога 2
-
 scp -r -P 2222 /путь до вашего/src s*****@helios.cs.ifmo.ru:. 
 
 scp -r -P 2222 /путь до/Pokemon.jar s******@helios.cs.ifmo.ru:.
