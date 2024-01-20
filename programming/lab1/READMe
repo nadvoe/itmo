@@ -1,9 +1,14 @@
 джарник:
 
-javac Laba1.java
+javac Laba1.java  
+#компилируем 
 
 echo main-class: Laba1 >> Manifest.mf
+#создадим манифест с классом Laba1
 
 jar cmf Manifest.mf Laba1practice.jar Laba1.class
+#из манифеста делаем джарник
+#(с - создать джар архив, m - взять данные из манифеста, f - название файлу Laba1.jar)
 
 java -jar Laba1pracrice.jar
+#запускаем джарник (указываем -jar выполняем джар архив)
