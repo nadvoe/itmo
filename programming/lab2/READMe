@@ -1,0 +1,24 @@
+джарник прога 2
+
+scp -r -P 2222 /путь до вашего/src s*****@helios.cs.ifmo.ru:. 
+
+scp -r -P 2222 /путь до/Pokemon.jar s******@helios.cs.ifmo.ru:.
+
+scp -r -P 2222 /путь до/MANIFEST.MF s******@helios.cs.ifmo.ru:. 
+#манифест должен лежать в папке вашей лабы, также как и Pokemon.jar
+
+ssh s******@helios.se.ifmo.ru -p 2222
+
+javac -encoding utf8 -d bin -cp "Pokemon.jar" src/mymoves/*/*.java src/mypokemons/*.java src/Main.java
+
+chmod u+rwx MANIFEST.MF
+chmod u+rwx Pokemon.jar
+
+mv MANIFEST.MF bin/
+mv Pokemon.jar bin/
+
+cd bin
+
+jar -cfm app.jar MANIFEST.MF Pokemon.jar mymoves/*/*.class mypokemons/*.class Main.class
+
+java -jar app.jar
