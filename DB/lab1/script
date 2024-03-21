@@ -1,1 +1,118 @@
+DROP TABLE IF EXISTS Characteristic CASCADE;
+DROP TABLE IF EXISTS Action CASCADE;
+DROP TABLE IF EXISTS Object CASCADE;
+DROP TABLE IF EXISTS Location CASCADE;
+DROP TABLE IF EXISTS Influence CASCADE;
+DROP TABLE IF EXISTS Person_Condition CASCADE;
+DROP TABLE IF EXISTS Person CASCADE;
+DROP TABLE IF EXISTS Person_Appearance CASCADE;
+DROP TABLE IF EXISTS Appearance CASCADE;
+
+CREATE TABLE Location (
+id SERIAL PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+square TEXT
+);
+CREATE TABLE Object (
+id SERIAL PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+real_or_not BOOLEAN NOT NULL,
+location_id BIGINT REFERENCES Location(id)
+);
+CREATE TABLE Characteristic (
+id SERIAL PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+object_id BIGINT REFERENCES Object(id)
+);
+CREATE TABLE Action (
+id SERIAL PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+object_id BIGINT REFERENCES Object(id)
+);
+CREATE TABLE Influence (
+id SERIAL PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+action_id BIGINT REFERENCES Action(id)
+);
+CREATE TABLE Person_Condition (
+id SERIAL PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+influence_id BIGINT REFERENCES Influence(id)
+);
+CREATE TABLE Person (
+id SERIAL PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+age INTEGER NOT NULL CHECK (age > 0),
+location_id BIGINT REFERENCES Location(id),
+condition_id BIGINT REFERENCES Person_Condition(id)
+);
+CREATE TABLE Appearance (
+id SERIAL PRIMARY KEY,
+height INTEGER,
+eyes_color TEXT,
+face_feature TEXT
+);
+CREATE TABLE Person_Appearance (
+id SERIAL PRIMARY KEY,
+person_id BIGINT REFERENCES Person(id),
+appearance_id BIGINT REFERENCES Appearance(id)
+);
+
+INSERT INTO Location (name, square) VALUES ('Граница дня и ночи', NULL);
+INSERT INTO Location (name, square) VALUES ('Солнце', '6 ⋅ 10^13 км^2');
+INSERT INTO Location (name, square) VALUES ('Ночная Страна', NULL);
+INSERT INTO Location (name, square) VALUES ('Европа','10 000 000 км^2');
+INSERT INTO Location (name, square) VALUES ('Санкт-Петербург','1439 км^2');
+INSERT INTO Location (name, square) VALUES ('Иркутск','277 км^2');
+
+INSERT INTO Object (name, real_or_not, location_id) VALUES ('Глыба', false, 1);
+INSERT INTO Object (name, real_or_not, location_id) VALUES ('Сила', false, 1);
+
+INSERT INTO Characteristic (name, object_id) VALUES ('огромная', 1);
+INSERT INTO Characteristic (name, object_id) VALUES ('черная', 1);
+INSERT INTO Characteristic (name, object_id) VALUES ('таинственная', 1);
+INSERT INTO Characteristic (name, object_id) VALUES ('непостижимая', 1);
+INSERT INTO Characteristic (name, object_id) VALUES ('могущественная', 2);
+
+INSERT INTO Action (name, object_id) VALUES ('стоит', 1);
+INSERT INTO Action (name, object_id) VALUES ('является святыней', 1);
+INSERT INTO Action (name, object_id) VALUES ('отталкивает', 2);
+INSERT INTO Action (name, object_id) VALUES ('окружает Глыбу', 2);
+INSERT INTO Action (name, object_id) VALUES ('поддерживает огни в небе', 2);
+
+INSERT INTO Influence (name, action_id) VALUES ('вызывает благоговение', 2);
+INSERT INTO Influence (name, action_id) VALUES ('заставляет поклоняться', 2);
+INSERT INTO Influence (name, action_id) VALUES ('не позволяет притрагиваться', 2);
+INSERT INTO Influence (name, action_id) VALUES ('не позволяет приближаться', 3);
+INSERT INTO Influence (name, action_id) VALUES ('защищает от падения огней', 5);
+
+INSERT INTO Person_Condition (name, influence_id) VALUES ('боится', 1);
+INSERT INTO Person_Condition (name, influence_id) VALUES ('молится', 2);
+INSERT INTO Person_Condition (name, influence_id) VALUES ('наблюдает', 3);
+INSERT INTO Person_Condition (name, influence_id) VALUES ('находится вдалеке', 4);
+INSERT INTO Person_Condition (name, influence_id) VALUES ('живет спокойно', 5);
+
+INSERT INTO Person (name, age, location_id, condition_id) VALUES ('Европеанец', 35, 4, 5);
+INSERT INTO Person (name, age, location_id, condition_id) VALUES ('Священнослужитель', 62, 1, 2);
+INSERT INTO Person (name, age, location_id, condition_id) VALUES ('Житель Ночной Страны', 27, 3, 1);
+INSERT INTO Person (name, age, location_id, condition_id) VALUES ('Солнечный житель', 17, 2, 3);
+INSERT INTO Person (name, age, location_id, condition_id) VALUES ('Гера', 18, 5, 5);
+INSERT INTO Person (name, age, location_id, condition_id) VALUES ('Кира', 19, 6, 5);
+INSERT INTO Person (name, age, location_id, condition_id) VALUES ('Илья', 18, 5, 5);
+
+INSERT INTO Appearance (height, eyes_color, face_feature) VALUES (200,'голубые', 'усы');
+INSERT INTO Appearance (height, eyes_color, face_feature) VALUES (NULL,'карие', 'большой нос');
+INSERT INTO Appearance (height, eyes_color, face_feature) VALUES (175,'черные', NULL);
+INSERT INTO Appearance (height, eyes_color, face_feature) VALUES (168,'зеленые', 'веснушки');
+INSERT INTO Appearance (height, eyes_color, face_feature) VALUES (195,'карие', NULL);
+INSERT INTO Appearance (height, eyes_color, face_feature) VALUES (150,'карие', 'маленький нос');
+INSERT INTO Appearance (height, eyes_color, face_feature) VALUES (185,'зеленые', NULL);
+
+INSERT INTO Person_Appearance (person_id, appearance_id) VALUES (1, 1);
+INSERT INTO Person_Appearance (person_id, appearance_id) VALUES (2, 2);
+INSERT INTO Person_Appearance (person_id, appearance_id) VALUES (3, 3);
+INSERT INTO Person_Appearance (person_id, appearance_id) VALUES (4, 4);
+INSERT INTO Person_Appearance (person_id, appearance_id) VALUES (5, 5);
+INSERT INTO Person_Appearance (person_id, appearance_id) VALUES (6, 6);
+INSERT INTO Person_Appearance (person_id, appearance_id) VALUES (7, 7);
 
