@@ -5,7 +5,6 @@ DROP TABLE IF EXISTS Location CASCADE;
 DROP TABLE IF EXISTS Influence CASCADE;
 DROP TABLE IF EXISTS Person_Condition CASCADE;
 DROP TABLE IF EXISTS Person CASCADE;
-DROP TABLE IF EXISTS Person_Appearance CASCADE;
 DROP TABLE IF EXISTS Appearance CASCADE;
 
 CREATE TABLE Location (
@@ -13,49 +12,52 @@ id SERIAL PRIMARY KEY,
 name VARCHAR(50) NOT NULL,
 square TEXT
 );
+
 CREATE TABLE Object (
 id SERIAL PRIMARY KEY,
 name VARCHAR(50) NOT NULL,
 real_or_not BOOLEAN NOT NULL,
 location_id BIGINT REFERENCES Location(id)
 );
+
 CREATE TABLE Characteristic (
 id SERIAL PRIMARY KEY,
 name VARCHAR(50) NOT NULL,
 object_id BIGINT REFERENCES Object(id)
 );
+
 CREATE TABLE Action (
 id SERIAL PRIMARY KEY,
 name VARCHAR(50) NOT NULL,
 object_id BIGINT REFERENCES Object(id)
 );
+
 CREATE TABLE Influence (
 id SERIAL PRIMARY KEY,
 name VARCHAR(50) NOT NULL,
 action_id BIGINT REFERENCES Action(id)
 );
+
 CREATE TABLE Person_Condition (
 id SERIAL PRIMARY KEY,
 name VARCHAR(50) NOT NULL,
 influence_id BIGINT REFERENCES Influence(id)
 );
-CREATE TABLE Person (
-id SERIAL PRIMARY KEY,
-name VARCHAR(50) NOT NULL,
-age INTEGER NOT NULL CHECK (age > 0),
-location_id BIGINT REFERENCES Location(id),
-condition_id BIGINT REFERENCES Person_Condition(id)
-);
+
 CREATE TABLE Appearance (
 id SERIAL PRIMARY KEY,
 height INTEGER,
 eyes_color TEXT,
 face_feature TEXT
 );
-CREATE TABLE Person_Appearance (
+
+CREATE TABLE Person (
 id SERIAL PRIMARY KEY,
-person_id BIGINT REFERENCES Person(id),
-appearance_id BIGINT REFERENCES Appearance(id)
+name VARCHAR(50) NOT NULL,
+age INTEGER NOT NULL CHECK (age > 0),
+location_id BIGINT REFERENCES Location(id),
+appearance_id BIGINT REFERENCES Appearance(id),
+condition_id BIGINT REFERENCES Person_Condition(id)
 );
 
 INSERT INTO Location (name, square) VALUES ('Граница дня и ночи', NULL);
@@ -92,14 +94,6 @@ INSERT INTO Person_Condition (name, influence_id) VALUES ('наблюдает', 
 INSERT INTO Person_Condition (name, influence_id) VALUES ('находится вдалеке', 4);
 INSERT INTO Person_Condition (name, influence_id) VALUES ('живет спокойно', 5);
 
-INSERT INTO Person (name, age, location_id, condition_id) VALUES ('Европеанец', 35, 4, 5);
-INSERT INTO Person (name, age, location_id, condition_id) VALUES ('Священнослужитель', 62, 1, 2);
-INSERT INTO Person (name, age, location_id, condition_id) VALUES ('Житель Ночной Страны', 27, 3, 1);
-INSERT INTO Person (name, age, location_id, condition_id) VALUES ('Солнечный житель', 17, 2, 3);
-INSERT INTO Person (name, age, location_id, condition_id) VALUES ('Гера', 18, 5, 5);
-INSERT INTO Person (name, age, location_id, condition_id) VALUES ('Кира', 19, 6, 5);
-INSERT INTO Person (name, age, location_id, condition_id) VALUES ('Илья', 18, 5, 5);
-
 INSERT INTO Appearance (height, eyes_color, face_feature) VALUES (200,'голубые', 'усы');
 INSERT INTO Appearance (height, eyes_color, face_feature) VALUES (NULL,'карие', 'большой нос');
 INSERT INTO Appearance (height, eyes_color, face_feature) VALUES (175,'черные', NULL);
@@ -108,11 +102,12 @@ INSERT INTO Appearance (height, eyes_color, face_feature) VALUES (195,'кари�
 INSERT INTO Appearance (height, eyes_color, face_feature) VALUES (150,'карие', 'маленький нос');
 INSERT INTO Appearance (height, eyes_color, face_feature) VALUES (185,'зеленые', NULL);
 
-INSERT INTO Person_Appearance (person_id, appearance_id) VALUES (1, 1);
-INSERT INTO Person_Appearance (person_id, appearance_id) VALUES (2, 2);
-INSERT INTO Person_Appearance (person_id, appearance_id) VALUES (3, 3);
-INSERT INTO Person_Appearance (person_id, appearance_id) VALUES (4, 4);
-INSERT INTO Person_Appearance (person_id, appearance_id) VALUES (5, 5);
-INSERT INTO Person_Appearance (person_id, appearance_id) VALUES (6, 6);
+INSERT INTO Person (name, age, location_id, appearance_id, condition_id) VALUES ('Европеанец', 35, 4, 1, 5);
+INSERT INTO Person (name, age, location_id, appearance_id, condition_id) VALUES ('Священнослужитель', 62, 1, 2, 2);
+INSERT INTO Person (name, age, location_id, appearance_id, condition_id) VALUES ('Житель Ночной Страны', 27, 3, 3, 1);
+INSERT INTO Person (name, age, location_id, appearance_id, condition_id) VALUES ('Солнечный житель', 17, 2, 4, 3);
+INSERT INTO Person (name, age, location_id, appearance_id, condition_id) VALUES ('Гера', 18, 5, 5, 5);
+INSERT INTO Person (name, age, location_id, appearance_id, condition_id) VALUES ('Кира', 19, 6, 6, 5);
+INSERT INTO Person (name, age, location_id, appearance_id, condition_id) VALUES ('Илья', 18, 5, 7, 5);
 INSERT INTO Person_Appearance (person_id, appearance_id) VALUES (7, 7);
 
