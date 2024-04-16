@@ -1,0 +1,36 @@
+CREATE OR REPLACE FUNCTION person_trigger()
+RETURNS TRIGGER AS $person_trigger$
+BEGIN
+	IF 	new.id IS NULL OR
+		new.name IS NULL OR
+		new.location_id IS NULL OR
+		new.appearance_id is NULL OR
+		new.condition_id IS NULL
+		THEN RAISE EXCEPTION 'Отсутствует значение одного из обязательных полей';
+	END IF;
+
+	IF 	new.age > '120'
+		THEN RAISE EXCEPTION 'Возраст не может быть больше 120 лет';
+	END IF; 
+	
+	IF	new.location_id NOT IN (SELECT (id) FROM Location)
+		THEN RAISE EXCEPTION '';
+	END IF;
+
+	IF 	new.condition_id NOT IN (SELECT (id) FROM Person_Condition)
+		THEN RAISE EXCEPTION '';
+	END IF;
+
+	IF 	new.appearance_id NOT IN (SELECT (id) FROM Appearance)
+		THEN RAISE EXCEPTION '';
+	END IF;
+
+	RETURN new;
+END;
+
+$person_trigger$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER Person_trigger
+BEFORE INSERT OR UPDATE ON Person
+FOR EACH ROW EXECUTE FUNCTION person_trigger();
+
