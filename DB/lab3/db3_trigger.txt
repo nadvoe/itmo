@@ -67,7 +67,7 @@ CREATE OR REPLACE FUNCTION backup_delete ()
 RETURNS TRIGGER AS $$
 BEGIN
 INSERT INTO Person_backup(person_id, name, status)
-VALUES (OLD.id, OLD.name, 'updated');
+VALUES (OLD.id, OLD.name, 'deleted');
 RETURN NEW;
 END;
 
