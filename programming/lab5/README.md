@@ -44,7 +44,7 @@
 
 # Описание хранимых в коллекции классов:
 
-```public class **Vehicle** {
+```public class Vehicle {
   private long id;   //Значение поля должно быть больше 0, уникальное, генерируется автоматически.
   private String   name;   //Поле не может быть null, Строка не может быть пустой
   private Coordinates coordinates;   //Поле не может быть null
@@ -53,17 +53,17 @@
   private Double fuelConsumption;   //Поле может быть null, Значение поля должно быть больше 0
   private VehicleType type;   //Поле может быть null
   private FuelType fuelType;   //Поле может быть null
-｝```
+｝
 
-```public class **Coordinates** {
+public class Coordinates {
   private Integer x;   //Максимальное значение поля: 5, Поле не может быть null 
   private Long y;   //Поле не может быть null
-}```
+}
 
-```public enum **VehicleType** {
+public enum VehicleType {
   BICYCLE, HOVERBOARD, SPACESHIP;
-｝```
+｝
 
-```public enum **FuelType** {
+public enum FuelType {
   GASOLINE, DIESEL, ALCOHOL, PLASMA, ANTIMATTER;
 }  ```
