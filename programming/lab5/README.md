@@ -66,4 +66,4 @@ public enum VehicleType {
 
 public enum FuelType {
   GASOLINE, DIESEL, ALCOHOL, PLASMA, ANTIMATTER;
-}  ```
+}
