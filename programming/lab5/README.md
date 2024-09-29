@@ -44,7 +44,7 @@
 
 # Описание хранимых в коллекции классов:
 
-\```
+```
 public class Vehicle {
   private long id;   //Значение поля должно быть больше 0, уникальное, генерируется автоматически.
   private String   name;   //Поле не может быть null, Строка не может быть пустой
@@ -67,4 +67,4 @@ public enum VehicleType {
 
 public enum FuelType {
   GASOLINE, DIESEL, ALCOHOL, PLASMA, ANTIMATTER;
-\```
+```
